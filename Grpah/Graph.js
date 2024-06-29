@@ -1,4 +1,5 @@
 const { Stack } = require("../Stack/Stack.js");
+const { Queue } = require("../Queue/Queue.js");
 class Graph {
   constructor() {
     this.adjList = new Array();
@@ -49,6 +50,27 @@ class Graph {
     console.log("DFS -> ", visitedArr);
   }
 
+  bfs() {
+    const q = new Queue();
+    const visitedArr = [];
+
+    const firstVer = Object.keys(this.adjList[0])[0];
+    q.enQueue(firstVer);
+    visitedArr.push(firstVer);
+
+    while (!q.isEmpty()) {
+      const adjVertices = this.get(q.deQueue());
+      adjVertices.forEach((ver) => {
+        if (!visitedArr.includes(ver)) {
+          q.enQueue(ver);
+          visitedArr.push(ver);
+        }
+      });
+    }
+
+    console.log("BFS -> ", visitedArr);
+  }
+
   displayGraph() {
     this.adjList.forEach((k) => {
       let res = "";
@@ -84,3 +106,4 @@ g.addEdge("C", "F");
 
 g.displayGraph();
 console.log(g.dfs());
+g.bfs();
